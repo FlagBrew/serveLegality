@@ -9,6 +9,7 @@ namespace ServeLegality
 {
     public class AutoLegality
     {
+        private bool debug = false;
         public event EventHandler LegalityChanged;
         public PKM LoadShowdownSetModded_PKSM(PKM Set, bool resetForm = false, int TID = -1, int SID = -1, string OT = "")
         {
@@ -75,6 +76,7 @@ namespace ServeLegality
                     Set.Egg_Location = 60002;
                     if (Set.Version == (int)GameVersion.D || Set.Version == (int)GameVersion.P || Set.Version == (int)GameVersion.Pt) Set.Egg_Location = 2002;
                     Set.Met_Level = 1;
+                    Set.Country = 64;
                     Set.ConsoleRegion = 2;
                     if (Set.Version == (int)GameVersion.RD || Set.Version == (int)GameVersion.BU || Set.Version == (int)GameVersion.YW || Set.Version == (int)GameVersion.GN)
                     {
@@ -113,8 +115,11 @@ namespace ServeLegality
                         }
                         else
                         {
-                            LegalityAnalysis la = new LegalityAnalysis(Set);
-                            Console.WriteLine(la.Report(false));
+                            if (debug)
+                            {
+                                LegalityAnalysis la = new LegalityAnalysis(Set);
+                                Console.WriteLine(la.Report(false));
+                            }
                         }
                     }
                     catch { continue; }
@@ -131,6 +136,7 @@ namespace ServeLegality
                     Set.Egg_Location = 0;
                     Set.Version = GameVersionList[i];
                     Set.Language = 2;
+                    Set.Country = 64;
                     Set.ConsoleRegion = 2;
                     if (trainerinfo)
                     {
@@ -188,8 +194,11 @@ namespace ServeLegality
                         }
                         else
                         {
-                            LegalityAnalysis la = new LegalityAnalysis(Set);
-                            Console.WriteLine(la.Report(false));
+                            if (debug)
+                            {
+                                LegalityAnalysis la = new LegalityAnalysis(Set);
+                                Console.WriteLine(la.Report(false));
+                            }
                         }
                     }
                     catch { continue; }
@@ -348,6 +357,44 @@ namespace ServeLegality
             if (report.Contains("Can't have ball for encounter type."))
             {
                 pk.Ball = 4;
+                LegalityAnalysis recheckLA = new LegalityAnalysis(pk);
+                updatedReport = recheckLA.Report(false);
+                report = updatedReport;
+            }
+            if (report.Contains("Can't have any OT Memory."))
+            {
+                pk.OT_Memory = 0;
+                pk.OT_Intensity = 0;
+                pk.OT_Feeling = 0;
+                pk.OT_TextVar = 0;
+                LegalityAnalysis recheckLA = new LegalityAnalysis(pk);
+                updatedReport = recheckLA.Report(false);
+                report = updatedReport;
+            }
+            if (report.Contains("OT Memory: Should be index 0."))
+            {
+                pk.OT_Memory = 0;
+                LegalityAnalysis recheckLA = new LegalityAnalysis(pk);
+                updatedReport = recheckLA.Report(false);
+                report = updatedReport;
+            }
+            if (report.Contains("OT Memory: Intensity should be index 0."))
+            {
+                pk.OT_Intensity = 0;
+                LegalityAnalysis recheckLA = new LegalityAnalysis(pk);
+                updatedReport = recheckLA.Report(false);
+                report = updatedReport;
+            }
+            if (report.Contains("OT Memory: Feeling should be index 0."))
+            {
+                pk.OT_Feeling = 0;
+                LegalityAnalysis recheckLA = new LegalityAnalysis(pk);
+                updatedReport = recheckLA.Report(false);
+                report = updatedReport;
+            }
+            if (report.Contains("OT Memory: TextVar should be index 0."))
+            {
+                pk.OT_TextVar = 0;
                 LegalityAnalysis recheckLA = new LegalityAnalysis(pk);
                 updatedReport = recheckLA.Report(false);
                 report = updatedReport;
