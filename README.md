@@ -26,5 +26,5 @@ The executable can be built with any compiler that supports C# 7.
 
 ### Credits
 
-Kaphotics and SciresM for PKHeX, on which this software is heavily based. Without their legality checking APIs, this couldn't exist anytime soon.
-ArchitDate, which provided his PKHeX [AutoLegality-mod](https://github.com/architdate/PKHeX-Auto-Legality-Mod/). Without his legality work, this couldn't exist anytime soon.
+* Kaphotics and SciresM for PKHeX, on which this software is heavily based. Without their legality checking APIs, this couldn't exist anytime soon.
+* ArchitDate, which provided his PKHeX [AutoLegality-mod](https://github.com/architdate/PKHeX-Auto-Legality-Mod/). Without his legality work, this couldn't exist anytime soon.
