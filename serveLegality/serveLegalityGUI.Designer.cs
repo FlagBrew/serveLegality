@@ -35,11 +35,12 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
+            this.Console = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 99);
+            this.button1.Location = new System.Drawing.Point(12, 560);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(315, 23);
             this.button1.TabIndex = 0;
@@ -99,11 +100,22 @@
             this.label3.TabIndex = 6;
             this.label3.Text = "Default Local IP is PC local IP";
             // 
-            // Form1
+            // Console
+            // 
+            this.Console.Location = new System.Drawing.Point(13, 103);
+            this.Console.Multiline = true;
+            this.Console.Name = "Console";
+            this.Console.ReadOnly = true;
+            this.Console.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.Console.Size = new System.Drawing.Size(315, 439);
+            this.Console.TabIndex = 7;
+            // 
+            // serveLegalityGUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(358, 137);
+            this.ClientSize = new System.Drawing.Size(358, 595);
+            this.Controls.Add(this.Console);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -111,7 +123,7 @@
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
-            this.Name = "Form1";
+            this.Name = "serveLegalityGUI";
             this.Text = "serveLegalityGUI";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -127,5 +139,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox Console;
     }
 }

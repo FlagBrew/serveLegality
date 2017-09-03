@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using PKHeX.Core;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace serveLegality
@@ -21,9 +22,9 @@ namespace serveLegality
             InitializeComponent();
         }
 
-        public static void DisplayUsage()
+        public void DisplayUsage()
         {
-            Console.WriteLine("\nUsage: serveLegality IPADDRESS [verbose]");
+            Console.Text += "\nUsage: serveLegality IPADDRESS [verbose]";
         }
 
         public static string GetLocalIPAddress()
@@ -62,19 +63,37 @@ namespace serveLegality
             return pk;
         }
 
-        public static void PrintLegality(byte[] inputBuffer, bool verbose)
+        public void PrintLegality(byte[] inputBuffer, bool verbose)
         {
             GameInfo.GameStrings gs = GameInfo.GetStrings("en");
             PKM pk = GetPKMFromPayload(inputBuffer);
             LegalityAnalysis la = new LegalityAnalysis(pk);
-            Console.WriteLine("===================================================================");
-            Console.WriteLine("Received: " + gs.specieslist[pk.Species] + "\n" + la.Report(verbose));
-            Console.WriteLine("===================================================================");
+            AppendTextBox("\nReceived: " + gs.specieslist[pk.Species] + Environment.NewLine + la.Report(verbose));
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            MessageBox.Show("Toggle Verbose and non verbose legalities");
+            Console.Text += ("Toggle Verbose and non verbose legalities");
+        }
+
+        public void AppendTextBox(string value)
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action<string>(AppendTextBox), new object[] { value });
+                return;
+            }
+            Console.Text += value;
+        }
+
+        public void ClearTextBox(string value = "")
+        {
+            if (InvokeRequired)
+            {
+                this.Invoke(new Action<string>(ClearTextBox), new object[] { value });
+                return;
+            }
+            Console.Text = value;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -87,7 +106,7 @@ namespace serveLegality
                 return;
             }
 
-            Console.WriteLine("Loading mgdb in memory...");
+            Console.Text += ("Loading mgdb in memory...");
             Legal.RefreshMGDB(MGDatabasePath);
 
             byte[] inputBuffer = new byte[HEADER.Length + GAME_LEN + PKSIZE];
@@ -97,37 +116,42 @@ namespace serveLegality
             if (textBox2.Text != "") if(!IPAddress.TryParse(textBox2.Text, out serverAddress)) return;
             TcpListener listener = new TcpListener(serverAddress, 9000);
 
-            Console.WriteLine("\nserveLegality is running on " + serverAddress + "... Press CTRL+C to exit.");
-            Console.WriteLine("Waiting for a connection from PKSM (running on address " + PKSMAddress + ")...");
+            Console.Text += Environment.NewLine + "serveLegality is running on " + serverAddress + "... Press CTRL+C to exit.";
+            Console.Text += Environment.NewLine + "Waiting for a connection from PKSM (running on address " + PKSMAddress + ")...\n";
 
-            while (true)
+            new Thread(() =>
             {
-                try
+                while (true)
                 {
-                    listener.Start();
-                    Socket inputSocket = listener.AcceptSocket();
-                    inputSocket.Receive(inputBuffer);
-                    inputSocket.Close();
-                    listener.Stop();
+                    try
+                    {
+                        listener.Start();
+                        Socket inputSocket = listener.AcceptSocket();
+                        inputSocket.Receive(inputBuffer);
+                        inputSocket.Close();
+                        listener.Stop();
+                        ClearTextBox();
+                        PrintLegality(inputBuffer, verbose);
+                        PKM pk = GetPKMFromPayload(inputBuffer);
+                        ServeLegality.AutoLegality al = new ServeLegality.AutoLegality();
+                        PKM legal = al.LoadShowdownSetModded_PKSM(pk);
+                        LegalityAnalysis la = new LegalityAnalysis(legal);
 
-                    PrintLegality(inputBuffer, verbose);
-                    PKM pk = GetPKMFromPayload(inputBuffer);
-                    ServeLegality.AutoLegality al = new ServeLegality.AutoLegality();
-                    PKM legal = al.LoadShowdownSetModded_PKSM(pk);
-
-                    Array.Copy(Encoding.ASCII.GetBytes(HEADER), 0, outputBuffer, 0, HEADER.Length);
-                    Array.Copy(legal.Data, 0, outputBuffer, 7, PKSIZE);
-                    TcpClient client = new TcpClient();
-                    client.Connect(PKSMAddress, 9000);
-                    Stream stream = client.GetStream();
-                    stream.Write(outputBuffer, 0, outputBuffer.Length);
-                    client.Close();
+                        Array.Copy(Encoding.ASCII.GetBytes(HEADER), 0, outputBuffer, 0, HEADER.Length);
+                        Array.Copy(legal.Data, 0, outputBuffer, 7, PKSIZE);
+                        TcpClient client = new TcpClient();
+                        client.Connect(PKSMAddress, 9000);
+                        Stream stream = client.GetStream();
+                        stream.Write(outputBuffer, 0, outputBuffer.Length);
+                        client.Close();
+                        AppendTextBox(Environment.NewLine + Environment.NewLine + "AutoLegality final report:\n\n" + la.Report(verbose));
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Error" + ex.StackTrace);
+                    }
                 }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error" + ex.StackTrace);
-                }
-            }
+            }).Start();
         }
     }
 }

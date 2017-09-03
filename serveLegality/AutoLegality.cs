@@ -482,7 +482,7 @@ namespace ServeLegality
             if (shiny) pk.SetShinySID();
             LegalityAnalysis recheckLA = new LegalityAnalysis(pk);
             string updatedReport = recheckLA.Report(false);
-            Console.WriteLine(updatedReport);
+            if (debug) Console.WriteLine(updatedReport);
             if (updatedReport.Contains("Invalid: Encounter Type PID mismatch."))
             {
                 List<List<uint>> ivspreads = new List<List<uint>>();
@@ -548,7 +548,7 @@ namespace ServeLegality
                 pk.IV_SPA = Convert.ToInt32(ivspreads[Convert.ToInt32(nature)][3]);
                 pk.IV_SPD = Convert.ToInt32(ivspreads[Convert.ToInt32(nature)][4]);
                 pk.IV_SPE = Convert.ToInt32(ivspreads[Convert.ToInt32(nature)][5]);
-                Console.WriteLine(pk.IV_HP + " " + pk.IV_ATK + " " + pk.IV_DEF + " " + pk.IV_SPA + " " + pk.IV_SPD + " " + pk.IV_SPE);
+                if (debug) Console.WriteLine(pk.IV_HP + " " + pk.IV_ATK + " " + pk.IV_DEF + " " + pk.IV_SPA + " " + pk.IV_SPD + " " + pk.IV_SPE);
                 if (!XD)
                 {
                     pidsid = IVtoPIDGenerator.M1PID((uint)pk.IV_HP, (uint)pk.IV_ATK, (uint)pk.IV_DEF, (uint)pk.IV_SPA, (uint)pk.IV_SPD, (uint)pk.IV_SPE, nature, 0);
@@ -592,7 +592,6 @@ namespace ServeLegality
                     LegalityAnalysis recheckLA2 = new LegalityAnalysis(pk);
                     updatedReport = recheckLA2.Report(false);
                 }
-                if (pk.E) Console.WriteLine(updatedReport);
                 LegalityAnalysis Legality = new LegalityAnalysis(pk);
                 if (Legality.Valid) return pk;
                 // Fix Moves if a slot is empty 
@@ -648,7 +647,7 @@ namespace ServeLegality
         private void UpdateLegality(PKM pkm, bool skipMoveRepop = false)
         {
             LegalityAnalysis Legality = new LegalityAnalysis(pkm);
-            Console.WriteLine(Legality.Report(true));
+            if (debug)Console.WriteLine(Legality.Report(true));
             // Refresh Move Legality
             bool[] validmoves = new bool[] { false, false, false, false };
             for (int i = 0; i < 4; i++)
