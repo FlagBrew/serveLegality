@@ -17,6 +17,7 @@ namespace serveLegality
         private const int GEN6 = 6;
         private const int GEN7 = 7;
         private const string MGDatabasePath = "mgdb";
+        private bool verbose = false;
         public serveLegalityGUI()
         {
             InitializeComponent();
@@ -77,6 +78,8 @@ namespace serveLegality
         {
             Console.Text += ("Toggle verbose and non verbose checks.");
             Console.Text += Environment.NewLine;
+            if (!verbose) verbose = true;
+            else verbose = false;
         }
 
         public void AppendTextBox(string value)
@@ -102,7 +105,6 @@ namespace serveLegality
         private void button1_Click(object sender, EventArgs e)
         {
             IPAddress PKSMAddress;
-            bool verbose = checkBox1.Checked;
             if (!IPAddress.TryParse(textBox1.Text, out PKSMAddress))
             {
                 DisplayUsage();
@@ -120,6 +122,7 @@ namespace serveLegality
             TcpListener listener = new TcpListener(serverAddress, 9000);
 
             Console.Text += Environment.NewLine + "Waiting for a connection from PKSM (running on address " + PKSMAddress + ")...\n";
+            button1.Text = "Server Running...";
 
             new Thread(() =>
             {

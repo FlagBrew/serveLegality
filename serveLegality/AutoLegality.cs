@@ -59,7 +59,8 @@ namespace ServeLegality
                 {
                     Set.Version = GameVersionList[i];
                     Set.Language = 2;
-                    if (trainerinfo)
+                    if (Set.OT_Name != "" && Set.TID > 0 && Set.SID > 0) { }
+                    else if (trainerinfo)
                     {
                         Set.OT_Name = OT;
                         Set.TID = TID;
@@ -138,7 +139,8 @@ namespace ServeLegality
                     Set.Language = 2;
                     Set.Country = 64;
                     Set.ConsoleRegion = 2;
-                    if (trainerinfo)
+                    if (Set.OT_Name != "" && Set.TID > 0 && Set.SID > 0) { }
+                    else if (trainerinfo)
                     {
                         Set.OT_Name = OT;
                         Set.TID = TID;
