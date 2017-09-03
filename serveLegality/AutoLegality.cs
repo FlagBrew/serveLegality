@@ -205,15 +205,6 @@ namespace ServeLegality
                 }
             }
 
-            /*
-            if (!new LegalityAnalysis(Set).Valid)
-            {
-                SAVEditor C_SAV = new SAVEditor();
-                C_SAV.PKME_Tabs = new Controls.PKMEditor();
-                C_SAV.PKME_Tabs.LoadShowdownSetModded(new ShowdownSet(Clipboard.GetText()), true);
-            }
-            */
-
             return Set;
         }
 
