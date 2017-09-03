@@ -41,7 +41,7 @@
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(16, 689);
-            this.button1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button1.Margin = new System.Windows.Forms.Padding(4);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(420, 28);
             this.button1.TabIndex = 0;
@@ -52,7 +52,7 @@
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(16, 15);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(344, 22);
             this.textBox1.TabIndex = 1;
@@ -61,7 +61,7 @@
             // 
             this.checkBox1.AutoSize = true;
             this.checkBox1.Location = new System.Drawing.Point(351, 94);
-            this.checkBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(83, 21);
             this.checkBox1.TabIndex = 2;
@@ -72,7 +72,7 @@
             // textBox2
             // 
             this.textBox2.Location = new System.Drawing.Point(16, 48);
-            this.textBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox2.Margin = new System.Windows.Forms.Padding(4);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(344, 22);
             this.textBox2.TabIndex = 3;
@@ -110,7 +110,7 @@
             // Console
             // 
             this.Console.Location = new System.Drawing.Point(17, 127);
-            this.Console.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Console.Margin = new System.Windows.Forms.Padding(4);
             this.Console.Multiline = true;
             this.Console.Name = "Console";
             this.Console.ReadOnly = true;
@@ -131,9 +131,9 @@
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "serveLegalityGUI";
-            this.Text = "serveLegalityGUI";
+            this.Text = "serveLegality";
             this.ResumeLayout(false);
             this.PerformLayout();
 

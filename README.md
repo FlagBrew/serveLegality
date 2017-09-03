@@ -2,7 +2,7 @@ serveLegality
 =====
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
 
-Pokémon legality checker server, meant to use with [PKSM](https://github.com/BernardoGiordano/PKSM). Heavily based on [PKHeX.Core](https://github.com/kwsch/PKHeX).
+Pokémon legality checker server, meant to use with [PKSM](https://github.com/BernardoGiordano/PKSM). Heavily based on [PKHeX.Core](https://github.com/kwsch/PKHeX) and [PKHeX AutoLegality-mod](https://github.com/architdate/PKHeX-Auto-Legality-Mod/).
 
 ## Usage
 
@@ -15,10 +15,13 @@ To use this, you should follow those steps:
 * Note the `IPADDRESS` in the bottom screen
 * Launch `serveLegality.exe`
 * Enter the PKSM Server IP (Bottom of your 3DS screen) in the PKSM IP text box.
-* Enter your own local IP in the second text box. The default is automatically set to your PC local IP. This text box is just a manual override.
 * Select the `Verbose` checkbox if you would like detailed legality information. Otherwise keep it unchecked.
 * In PKSM, move onto a pokemon in your boxes, then press `X` to enter serveLegality's IP address, then confirm
-* Send any pokemon file you want by pressing `X` on PKSM, the legality report will appear on serveLegalityGUI console box.
+* Send any pokemon file you want by pressing `X` on PKSM, the legality report will appear on serveLegality console box.
+
+## Screenshots
+
+![mg](assets/demo.png)
 
 ## Building
 
