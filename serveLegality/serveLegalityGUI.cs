@@ -6,6 +6,8 @@ using PKHeX.Core;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Net.NetworkInformation;
+using System.Linq;
 
 namespace serveLegality
 {
@@ -31,12 +33,21 @@ namespace serveLegality
 
         public static string GetLocalIPAddress()
         {
-            var host = Dns.GetHostEntry(Dns.GetHostName());
-            foreach (var ip in host.AddressList)
+            foreach (NetworkInterface ni in NetworkInterface.GetAllNetworkInterfaces())
             {
-                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                var addr = ni.GetIPProperties().GatewayAddresses.FirstOrDefault();
+                if (addr != null && !addr.Address.ToString().Equals("0.0.0.0"))
                 {
-                    return ip.ToString();
+                    if (ni.NetworkInterfaceType == NetworkInterfaceType.Wireless80211 || ni.NetworkInterfaceType == NetworkInterfaceType.Ethernet)
+                    {
+                        foreach (UnicastIPAddressInformation ip in ni.GetIPProperties().UnicastAddresses)
+                        {
+                            if (ip.Address.AddressFamily == AddressFamily.InterNetwork)
+                            {
+                                return ip.Address.ToString();
+                            }
+                        }
+                    }
                 }
             }
             throw new Exception("Local IP Address Not Found!");
@@ -144,13 +155,16 @@ namespace serveLegality
                         LegalityAnalysis la = new LegalityAnalysis(legal);
                         AppendTextBox(Environment.NewLine + Environment.NewLine + "AutoLegality final report:" + Environment.NewLine + Environment.NewLine + la.Report(verbose) + Environment.NewLine);
 
-                        Array.Copy(Encoding.ASCII.GetBytes(HEADER), 0, outputBuffer, 0, HEADER.Length);
-                        Array.Copy(legal.Data, 0, outputBuffer, 7, PKSIZE);
-                        TcpClient client = new TcpClient();
-                        client.Connect(PKSMAddress, 9000);
-                        Stream stream = client.GetStream();
-                        stream.Write(outputBuffer, 0, outputBuffer.Length);
-                        client.Close();  
+                        if (la.Valid)
+                        {
+                            Array.Copy(Encoding.ASCII.GetBytes(HEADER), 0, outputBuffer, 0, HEADER.Length);
+                            Array.Copy(legal.Data, 0, outputBuffer, 7, PKSIZE);
+                            TcpClient client = new TcpClient();
+                            client.Connect(PKSMAddress, 9000);
+                            Stream stream = client.GetStream();
+                            stream.Write(outputBuffer, 0, outputBuffer.Length);
+                            client.Close();
+                        }
                     }
                     catch (Exception ex)
                     {
