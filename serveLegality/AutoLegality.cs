@@ -416,7 +416,7 @@ namespace ServeLegality
                 updatedReport = recheckLA.Report(false);
                 report = updatedReport;
             }
-            if (report.Equals("Invalid: Encounter Type PID mismatch."))
+            if (report.Contains("Invalid: Encounter Type PID mismatch."))
             {
                 //return true;
 
@@ -452,6 +452,27 @@ namespace ServeLegality
                     {
                         return false;
                     }
+                }
+            }
+            if (report.Contains("Should have at least 3 IVs = 31"))
+            {
+                PKM temp = pk;
+                pk.IV_HP = 31;
+                pk.IV_ATK = 31;
+                pk.IV_DEF = 31;
+                pk.IV_SPA = 31;
+                pk.IV_SPD = 31;
+                pk.IV_SPE = 31;
+                LegalityAnalysis recheckLA = new LegalityAnalysis(pk);
+                updatedReport = recheckLA.Report(false);
+                report = updatedReport;
+                if (new LegalityAnalysis(pk).Valid)
+                {
+                    return false;
+                }
+                else
+                {
+                    pk = temp;
                 }
             }
             return false;
