@@ -126,7 +126,7 @@ namespace serveLegality
             Legal.RefreshMGDB(MGDatabasePath);
 
             byte[] inputBuffer = new byte[HEADER.Length + GAME_LEN + PKSIZE];
-            byte[] outputBuffer = new byte[HEADER.Length + GAME_LEN + PKSIZE];
+            byte[] outputBuffer = new byte[HEADER.Length + PKSIZE];
 
             IPAddress serverAddress = IPAddress.Parse(GetLocalIPAddress());
             if (textBox2.Text != "") if(!IPAddress.TryParse(textBox2.Text, out serverAddress)) return;
