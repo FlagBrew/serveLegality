@@ -2,7 +2,7 @@ serveLegality
 =====
 ![License](https://img.shields.io/badge/License-GPLv3-blue.svg)
 
-Pokémon legality checker server, meant to use with [PKSM](https://github.com/BernardoGiordano/PKSM). Heavily based on [PKHeX.Core](https://github.com/kwsch/PKHeX) and [PKHeX AutoLegality-mod](https://github.com/architdate/PKHeX-Auto-Legality-Mod/).
+Pokémon legality checker server, meant to use with [PKSM](https://github.com/FlagBrew/PKSM). Heavily based on [PKHeX.Core](https://github.com/kwsch/PKHeX) and [PKHeX AutoLegality-mod](https://github.com/architdate/PKHeX-Auto-Legality-Mod/).
 
 ## Usage
 
