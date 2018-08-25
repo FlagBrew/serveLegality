@@ -4,6 +4,8 @@ serveLegality
 
 Pokémon legality checker server, meant to use with [PKSM](https://github.com/FlagBrew/PKSM). Heavily based on [PKHeX.Core](https://github.com/kwsch/PKHeX) and [PKHeX AutoLegality-mod](https://github.com/architdate/PKHeX-Auto-Legality-Mod/).
 
+The development of this tool is currently on hold because the maintainer is busy with the final university year. Once the development resumes, this notice will be removed. Thank you for the patience
+
 ## Usage
 
 This software is meant to be used in couple with PKSM.
