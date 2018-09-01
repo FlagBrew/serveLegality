@@ -23,7 +23,7 @@ To use this, you should follow those steps:
 
 ## Screenshots
 
-![mg](assets/demo.png)
+![mg](./assets/demo.png)
 
 ## Building
 
